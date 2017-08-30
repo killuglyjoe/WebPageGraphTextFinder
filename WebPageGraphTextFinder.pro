@@ -25,6 +25,9 @@ OBJECTS_DIR = $$BUILDDIR/OBJ
 
 LIBDIR = $$PWD/libs
 
+include($$LIBDIR/textutils/textutils.pri)
+include($$LIBDIR/networkutils/networkutils.pri)
+
 SOURCES += main.cpp\
         mainwindow.cpp
 
