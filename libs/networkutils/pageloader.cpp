@@ -12,7 +12,11 @@ PageLoader::PageLoader(QObject *parent) :
 
 PageLoader::~PageLoader()
 {
+}
 
+QString PageLoader::curURL() const
+{
+    return m_url;
 }
 /**
  * @brief PageLoader::loadUrl
@@ -21,8 +25,8 @@ PageLoader::~PageLoader()
 void PageLoader::loadUrl(const QString &url)
 {
     if(url.isEmpty()) return;
-
-    m_manager->get(QNetworkRequest(QUrl(url)));
+    m_url = url;
+    m_manager->get(QNetworkRequest(QUrl(m_url)));
 }
 /**
  * @brief PageLoader::replyFinished
@@ -33,11 +37,11 @@ void PageLoader::replyFinished(QNetworkReply *reply)
     if(reply->error() == QNetworkReply::NoError)
     {
         QByteArray data(reply->readAll());
-        //    qDebug() << Q_FUNC_INFO << data;
+        qDebug() << Q_FUNC_INFO << data;
 
         emit pageLoaded(data);
     }
-    else
+    else//handling errors
     {
         emit errorLoadingUrl(reply->url().toString(), reply->errorString());
     }

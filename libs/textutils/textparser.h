@@ -1,27 +1,24 @@
 #ifndef TEXTPARSER_H
 #define TEXTPARSER_H
 
-#include <QObject>
-
-class TextParser : public QObject
+#include "basetextparser.h"
+/**
+ * @brief The TextParser class provides any text search routines
+ * which return a list of positions matched text occurances
+ */
+class TextParser : public BaseTextParser
 {
     Q_OBJECT
 public:
     explicit TextParser(QObject *parent = 0);
     ~TextParser();
 
-signals:
-    void parsedUrls(const QStringList &);
-    void matchresults(const int &);
+    void parse();
 
-public slots:
-    void setParseData(const QByteArray &data);
-
-    void parseUrls();
-    QStringList findText(const QString &searchText);
+protected:
+    void moveToBaseThread(QThread *baseThread);
 
 private:
-    QByteArray  m_data;
 };
 
 #endif // TEXTPARSER_H

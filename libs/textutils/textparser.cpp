@@ -1,65 +1,42 @@
 #include "textparser.h"
 
-#include <QDebug>
-#include <QRegExp>
-
-/// pattern taken from https://stackoverflow.com/questions/6038061/regular-expression-to-find-urls-within-a-string
-const QString patternUrl("(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?");
-
 TextParser::TextParser(QObject *parent) :
-    QObject(parent)
+    BaseTextParser(parent)
 {
-
 }
 
 TextParser::~TextParser()
 {
-
 }
 /**
- * @brief TextParser::setParseData
- * @param data
+ * @brief TextParser::parse impl
  */
-void TextParser::setParseData(const QByteArray &data)
+void TextParser::parse()
 {
-    m_data = data;
-    parseUrls();
-}
-/**
- * @brief TextParser::parseUrls
- * @return
- */
-void TextParser::parseUrls()
-{
-    if(m_data.isEmpty()) return;
+   QRegExp urlExp(rxPattern());
 
-    QRegExp urlExp(patternUrl);
+    QList<int> posList;
+    int pos(0);
 
-    QStringList list;
-    int pos = 0;
-
-    while ((pos = urlExp.indexIn(m_data, pos)) != -1) {
-        QString matchUrl(urlExp.cap(0));
-        if(!list.contains(matchUrl))//not allowed repet URLs
+    while((pos = urlExp.indexIn(data(), pos)) != -1)
+    {
+        if(!posList.contains(pos))//not allowed repet URLs
         {
-            list << matchUrl;
-            qDebug() << Q_FUNC_INFO << matchUrl;
+            posList << pos;
+//            qDebug() << Q_FUNC_INFO << pos;
         }
         pos += urlExp.matchedLength();
     }
-//    qDebug() << Q_FUNC_INFO << list;
+//    qDebug() << Q_FUNC_INFO << posList << rxPattern();
 
-    if(list.count())
-        emit parsedUrls(list);
+    if(posList.count())
+    {
+        setTotalMatches(posList.count());
+        emit onParsedPosList(posList);
+    }
 }
-/**
- * @brief TextParser::findText
- * @param searchText
- * @return
- */
-QStringList TextParser::findText(const QString &searchText)
-{
-    if(m_data.isEmpty() || searchText.isEmpty()) return QStringList();
 
-    return QStringList();
+void TextParser::moveToBaseThread(QThread *baseThread)
+{
+    moveToThread(baseThread);
 }

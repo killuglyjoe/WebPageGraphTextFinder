@@ -12,6 +12,8 @@ public:
     explicit PageLoader(QObject *parent = 0);
     ~PageLoader();
 
+    QString curURL()const;
+
 signals:
     void pageLoaded(const QByteArray &);
     void errorLoadingUrl(const QString &url, const QString &error);
@@ -23,7 +25,8 @@ private slots:
     void replyFinished(QNetworkReply *reply);
 
 private:
-    QNetworkAccessManager *m_manager;
+    QNetworkAccessManager   *m_manager;
+    QString                 m_url;
 };
 
 #endif // PAGELOADER_H

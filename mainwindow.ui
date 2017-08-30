@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>465</width>
-    <height>246</height>
+    <width>692</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,58 +17,88 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="4" column="0">
      <widget class="QLabel" name="label_4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>Кол-во URL</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QSpinBox" name="urlCountBox">
-      <property name="value">
-       <number>10</number>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>Кол-во потоков</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QSpinBox" name="threadCountBox">
-      <property name="value">
-       <number>5</number>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>Текст для поиска</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1" colspan="3">
-     <widget class="QLineEdit" name="txtSrchEdit"/>
+    <item row="1" column="1" colspan="2">
+     <widget class="QLineEdit" name="txtSrchEdit">
+      <property name="text">
+       <string>resource</string>
+      </property>
+      <property name="maxLength">
+       <number>255</number>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>URL</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1" colspan="3">
-     <widget class="QLineEdit" name="urlEdit"/>
-    </item>
-    <item row="5" column="1">
+    <item row="5" column="0" colspan="3">
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item>
        <widget class="QPushButton" name="btnStart">
         <property name="text">
          <string>Старт</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -77,6 +107,9 @@
         <property name="text">
          <string>Стоп</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -84,9 +117,118 @@
         <property name="text">
          <string>Пауза</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
+    </item>
+    <item row="4" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QSpinBox" name="urlCountBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QLineEdit" name="urlEdit">
+      <property name="text">
+       <string>https://www.google.com.ua/search?q=immediately&amp;oq=imediatly&amp;aqs=chrome.1.69i57j0l5.2144j0j1&amp;client=ubuntu&amp;sourceid=chrome&amp;ie=UTF-8</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QSpinBox" name="threadCountBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="6" column="0" colspan="3">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string>Ход выполнения</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QTextEdit" name="textEdit"/>
+       </item>
+      </layout>
+      <zorder>textEdit</zorder>
+      <zorder>textEdit</zorder>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -95,7 +237,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>465</width>
+     <width>692</width>
      <height>25</height>
     </rect>
    </property>
@@ -107,7 +249,6 @@
    </widget>
    <addaction name="menu"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
     <string>Закрыть</string>
@@ -116,5 +257,166 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnStart</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>urlCountBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>241</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>143</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStart</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>threadCountBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>142</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStart</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>txtSrchEdit</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>180</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>140</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStart</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>urlEdit</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>250</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>146</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStop</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>urlCountBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStop</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>threadCountBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>355</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>184</x>
+     <y>122</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStop</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>txtSrchEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>432</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStop</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>urlEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>184</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>466</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStart</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>btnStart</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>223</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>193</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnStop</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>btnStart</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

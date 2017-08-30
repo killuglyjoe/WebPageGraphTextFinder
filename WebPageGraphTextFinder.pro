@@ -25,12 +25,17 @@ OBJECTS_DIR = $$BUILDDIR/OBJ
 
 LIBDIR = $$PWD/libs
 
+INCLUDEPATH += $$PWD $$LIBDIR
+DEPENDPATH += $$PWD $$LIBDIR
+
 include($$LIBDIR/textutils/textutils.pri)
 include($$LIBDIR/networkutils/networkutils.pri)
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    libs/webpagetextthreadprocessor.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    libs/webpagetextthreadprocessor.h
 
 FORMS    += mainwindow.ui
