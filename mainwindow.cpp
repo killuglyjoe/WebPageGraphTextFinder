@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-static const QString cStrBegin("<span style=\" font-weight:600;\">Начало поиска для...</span>");
-static const QString cStrStop("<span style=\" font-weight:600;\">Отмена</span>");
-static const QString cStrFinished("<span style=\" font-weight:600;\">Конец</span>");
-static const QString cStrNetError("<span style=\" font-style:italic; color:#e83720;\">Сетевая ошибка адрес: %1 значение: %2 </span>");
-static const QString cStrMatchResult("<span style=\" font-style:italic; text-decoration: underline; color:#0000ff;\">Найдено %1 совпадений по адресу %2 </span>");
+static const QString cStrBegin(MainWindow::trUtf8("<span style=\" font-weight:600;\">Начало поиска для...</span>"));
+static const QString cStrStop(MainWindow::trUtf8("<span style=\" font-weight:600;\">Отмена</span>"));
+static const QString cStrFinished(MainWindow::trUtf8("<span style=\" font-weight:600;\">Конец</span>"));
+static const QString cStrNetError(MainWindow::trUtf8("<span style=\" font-style:italic; color:#e83720;\">"
+                                                 "Сетевая ошибка адрес: %1 значение: %2 </span>"));
+static const QString cStrMatchResult(MainWindow::trUtf8("<span style=\" font-style:italic; text-decoration: "
+                                                    "underline; color:#0000ff;\">Найдено %1 совпадений по адресу %2 </span>"));
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -167,10 +169,14 @@ void MainWindow::processParsedSubURLs(const QStringList &subURLs)
         connect(processor,  &WebPageTextThreadProcessor::foundMatches,
                 this,   &MainWindow::handleMatchResults);
 
+        // ugly lambda goes below
         connect(processor,  &WebPageTextThreadProcessor::finished,
-                this,  [this](){m_procesorsList.removeOne((WebPageTextThreadProcessor*)sender());
+                this,  [this]()
+        {
+            m_procesorsList.removeOne((WebPageTextThreadProcessor*)sender());
             sender()->deleteLater();
-        checkFinish();});
+            checkFinish();
+        });
 
         m_procesorsList.append(processor);
     }

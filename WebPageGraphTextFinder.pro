@@ -11,6 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = WebPageGraphTextFinder
 TEMPLATE = app
 
+#Переводы
+CODECFORTR  = UTF-8
+
+TRANSLATIONS = \
+    $$PWD/wpgtf_en.ts \
+    $$PWD/wpgtf_ru.ts
+
 BUILDDIR = Compiled
 
 DESTDIR += $$PWD/Distr
