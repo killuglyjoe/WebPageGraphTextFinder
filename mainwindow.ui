@@ -57,7 +57,7 @@
     <item row="1" column="1" colspan="2">
      <widget class="QLineEdit" name="txtSrchEdit">
       <property name="text">
-       <string>resource</string>
+       <string>http</string>
       </property>
       <property name="maxLength">
        <number>255</number>
@@ -167,7 +167,7 @@
     <item row="0" column="1" colspan="2">
      <widget class="QLineEdit" name="urlEdit">
       <property name="text">
-       <string>https://www.google.com.ua/search?q=immediately&amp;oq=imediatly&amp;aqs=chrome.1.69i57j0l5.2144j0j1&amp;client=ubuntu&amp;sourceid=chrome&amp;ie=UTF-8</string>
+       <string>http://google.com/</string>
       </property>
      </widget>
     </item>
@@ -223,11 +223,9 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QTextEdit" name="statusEdit"/>
        </item>
       </layout>
-      <zorder>textEdit</zorder>
-      <zorder>textEdit</zorder>
      </widget>
     </item>
    </layout>

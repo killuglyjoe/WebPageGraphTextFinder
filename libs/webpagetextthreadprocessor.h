@@ -25,7 +25,14 @@ public:
     QString searchPattern() const;
     void setSearchPattern(const QString &searchPattern);
 
+    PageLoader* loader() const;
+
+    TextParser* parser() const;
+
 signals:
+    void finished();
+    void errorLoadingUrl(const QString &url, const QString &error);
+    void foundMatches(const QString &url, const int &matchesCount);
 
 protected slots:
     void threadSatrtInit();

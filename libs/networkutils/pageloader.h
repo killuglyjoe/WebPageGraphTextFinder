@@ -27,6 +27,8 @@ private slots:
 private:
     QNetworkAccessManager   *m_manager;
     QString                 m_url;
+    QSslConfiguration       m_sslConfiguration;
+    QNetworkReply           *m_reply;
 };
 
 #endif // PAGELOADER_H

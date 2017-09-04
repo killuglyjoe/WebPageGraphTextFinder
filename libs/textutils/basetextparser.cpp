@@ -67,8 +67,15 @@ void BaseTextParser::setData(const QByteArray &data)
     if(!m_data.isEmpty())
     {
         if(!rxPattern().isEmpty())
+        {
+//            qDebug() << Q_FUNC_INFO << "Begin parse";
             parse();
+        }
         else
             qDebug() << Q_FUNC_INFO << "pattern is empty";
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "data is empty";
     }
 }

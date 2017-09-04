@@ -39,4 +39,5 @@ void TextParser::parse()
 void TextParser::moveToBaseThread(QThread *baseThread)
 {
     moveToThread(baseThread);
+
 }
