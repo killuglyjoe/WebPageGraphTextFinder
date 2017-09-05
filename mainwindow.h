@@ -23,7 +23,7 @@ private slots:
     void on_actionExit_triggered();
 
     void on_btnStart_clicked(bool checked);
-    void on_btnPause_clicked();
+    void on_btnStop_clicked(bool checked);
 
     void on_urlEdit_returnPressed();
 
@@ -31,7 +31,6 @@ private slots:
 
     void processParsedSubURLs(const QStringList &subURLs);
 
-    void on_btnStop_clicked(bool checked);
 
     void handleNetworkError(const QString &url, const QString &error);
     void handleMatchResults(const QString &url, const int &matchesCount);

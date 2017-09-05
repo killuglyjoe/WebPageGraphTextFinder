@@ -57,9 +57,8 @@ void PageLoader::replyFinished(QNetworkReply *reply)
             if(redirect.isRelative())
                 redirect = reply->url().resolved(redirect);
             QNetworkRequest req(redirect);
-            req.setRawHeader( "User-Agent" , "Meeting C++ RSS Reader" );
+            req.setRawHeader( "User-Agent" , "PageLoader" );
             /*QNetworkReply* reply =*/ m_manager->get(req);
-//            runningreplies.insert(std::make_pair(reply,id));
             return;
         }
         QByteArray data(reply->readAll());

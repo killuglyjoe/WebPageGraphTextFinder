@@ -56,7 +56,7 @@ void WebPageTextThreadProcessor::setUrlsList(const QStringList &urlsList)
 
 void WebPageTextThreadProcessor::processParsedPosList(const QList<int> &posList)
 {
-    qDebug() << Q_FUNC_INFO << m_urlsList.count() << m_loader->curURL() << posList.count();
+//    qDebug() << Q_FUNC_INFO << m_urlsList.count() << m_loader->curURL() << posList.count();
 
     emit foundMatches(m_loader->curURL(), posList.count());
 

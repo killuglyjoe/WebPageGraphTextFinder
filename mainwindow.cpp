@@ -2,10 +2,14 @@
 #include "ui_mainwindow.h"
 
 static const QString cStrBegin(MainWindow::trUtf8("<span style=\" font-weight:600;\">Начало поиска для...</span>"));
+
 static const QString cStrStop(MainWindow::trUtf8("<span style=\" font-weight:600;\">Отмена</span>"));
+
 static const QString cStrFinished(MainWindow::trUtf8("<span style=\" font-weight:600;\">Конец</span>"));
+
 static const QString cStrNetError(MainWindow::trUtf8("<span style=\" font-style:italic; color:#e83720;\">"
                                                  "Сетевая ошибка адрес: %1 значение: %2 </span>"));
+
 static const QString cStrMatchResult(MainWindow::trUtf8("<span style=\" font-style:italic; text-decoration: "
                                                     "underline; color:#0000ff;\">Найдено %1 совпадений по адресу %2 </span>"));
 
@@ -34,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ctrlBtnGroup->addButton(ui->btnStart);
     ctrlBtnGroup->addButton(ui->btnStop);
     ctrlBtnGroup->addButton(ui->btnPause);
+
+    // Pause/Resume processing (* не обязательно для выполнения)
+    ui->btnPause->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -70,10 +77,18 @@ void MainWindow::on_btnStart_clicked(bool checked)
  */
 void MainWindow::on_btnStop_clicked(bool checked)
 {
-    ui->statusEdit->append((m_procesorsList.count() == 1) ? trUtf8(cStrFinished.toUtf8()) : trUtf8(cStrStop.toUtf8()));
+    bool isFinished(m_procesorsList.count() == 1);
+    // finishing
+    if(isFinished) // only base URL
+        ui->statusEdit->append(trUtf8(cStrFinished.toUtf8()));
 
+    // canceling
     if(checked)
+    {
         cleanAllProcesses();
+        if(!isFinished)
+            ui->statusEdit->append(trUtf8(cStrStop.toUtf8()));
+    }
 }
 /**
  * @brief Output NetworkError
@@ -102,13 +117,6 @@ void MainWindow::checkFinish()
     {
         ui->btnStop->click();
     }
-}
-/**
- * @brief Pause/Resume processing (* не обязательно для выполнения)
- */
-void MainWindow::on_btnPause_clicked()
-{
-    ui->btnPause->setChecked(false);
 }
 /**
  * @brief Starting all
@@ -141,6 +149,8 @@ void MainWindow::processParsedSubURLs(const QStringList &subURLs)
     WebPageTextThreadProcessor  *processor = new WebPageTextThreadProcessor(QStringList(m_webPageLoader->curURL()),
                                                                             txt2Search);
 
+    ui->statusEdit->append(trUtf8("Поиск текста \"%1\" для %2").arg(txt2Search).arg(m_webPageLoader->curURL()));
+
     connect(processor,  &WebPageTextThreadProcessor::errorLoadingUrl,
             this,   &MainWindow::handleNetworkError);
 
@@ -154,31 +164,41 @@ void MainWindow::processParsedSubURLs(const QStringList &subURLs)
     // if all_tasks == thread_count then each processor will get one task,
     // else each processor will get (all_tasks/thread_count) tasks
     // or whatever last
+    QStringList subList;
+
+    int balancedUrlsCount(procListURL.count() / ui->threadCountBox->value());
+    balancedUrlsCount = balancedUrlsCount < 1 ? 1 : balancedUrlsCount;
+
     foreach (QString url, procListURL)
     {
-        if(url.isEmpty())
-            continue;
+        if(url.isEmpty()) continue;//???
+
+        subList.append(url);
 
         ui->statusEdit->append(trUtf8("Поиск текста \"%1\" для %2").arg(txt2Search).arg(url));
 
-        WebPageTextThreadProcessor  *processor = new WebPageTextThreadProcessor(QStringList(url),
-                                                                                txt2Search);
-
-        connect(processor,  &WebPageTextThreadProcessor::errorLoadingUrl,
-                this,   &MainWindow::handleNetworkError);
-        connect(processor,  &WebPageTextThreadProcessor::foundMatches,
-                this,   &MainWindow::handleMatchResults);
-
-        // ugly lambda goes below
-        connect(processor,  &WebPageTextThreadProcessor::finished,
-                this,  [this]()
+        if(subList.count() == balancedUrlsCount || procListURL.indexOf(url) == procListURL.count()-1)
         {
-            m_procesorsList.removeOne((WebPageTextThreadProcessor*)sender());
-            sender()->deleteLater();
-            checkFinish();
-        });
 
-        m_procesorsList.append(processor);
+            WebPageTextThreadProcessor  *processor = new WebPageTextThreadProcessor(subList,
+                                                                                    txt2Search);
+
+            connect(processor,  &WebPageTextThreadProcessor::errorLoadingUrl,
+                    this,   &MainWindow::handleNetworkError);
+            connect(processor,  &WebPageTextThreadProcessor::foundMatches,
+                    this,   &MainWindow::handleMatchResults);
+
+            // ugly lambda goes below
+            connect(processor,  &WebPageTextThreadProcessor::finished,
+                    this,  [this]()
+            {
+                m_procesorsList.removeOne((WebPageTextThreadProcessor*)sender());
+                sender()->deleteLater();
+                checkFinish();
+            });
+
+            m_procesorsList.append(processor);
+        }
     }
 }
 /**
@@ -194,7 +214,7 @@ void MainWindow::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 /**
- * @brief Cancels and delet all running processes
+ * @brief Cancels and deletes all running processes
  */
 void MainWindow::cleanAllProcesses()
 {
