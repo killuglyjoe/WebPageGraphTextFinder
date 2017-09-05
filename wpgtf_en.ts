@@ -94,8 +94,13 @@
         <translation>&lt;span style=&quot; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;Found %1 matches in URL %2 &lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="152"/>
-        <location filename="mainwindow.cpp" line="178"/>
+        <location filename="mainwindow.cpp" line="16"/>
+        <source>&lt;span style=&quot;color:#442222;&quot;&gt;Ненайдено совпадений по адресу %2 &lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="164"/>
+        <location filename="mainwindow.cpp" line="186"/>
         <source>Поиск текста &quot;%1&quot; для %2</source>
         <translation>Searching text &quot;%1&quot; for %2</translation>
     </message>

@@ -13,6 +13,9 @@ static const QString cStrNetError(MainWindow::trUtf8("<span style=\" font-style:
 static const QString cStrMatchResult(MainWindow::trUtf8("<span style=\" font-style:italic; text-decoration: "
                                                     "underline; color:#0000ff;\">Найдено %1 совпадений по адресу %2 </span>"));
 
+static const QString cStrNoResult(MainWindow::trUtf8("<span style=\"color:#442222;"
+                                                    "\">Ненайдено совпадений по адресу %2 </span>"));
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -78,6 +81,7 @@ void MainWindow::on_btnStart_clicked(bool checked)
 void MainWindow::on_btnStop_clicked(bool checked)
 {
     bool isFinished(m_procesorsList.count() == 1);
+
     // finishing
     if(isFinished) // only base URL
         ui->statusEdit->append(trUtf8(cStrFinished.toUtf8()));
@@ -107,6 +111,14 @@ void MainWindow::handleNetworkError(const QString &url, const QString &error)
 void MainWindow::handleMatchResults(const QString &url, const int &matchesCount)
 {
     ui->statusEdit->append(cStrMatchResult.arg(matchesCount).arg(url));
+}
+/**
+ * @brief Output handleNoResults
+ * @param url
+ */
+void MainWindow::handleNoResults(const QString &url)
+{
+    ui->statusEdit->append(cStrNoResult.arg(url));
 }
 /**
  * @brief checkFinish
@@ -151,11 +163,7 @@ void MainWindow::processParsedSubURLs(const QStringList &subURLs)
 
     ui->statusEdit->append(trUtf8("Поиск текста \"%1\" для %2").arg(txt2Search).arg(m_webPageLoader->curURL()));
 
-    connect(processor,  &WebPageTextThreadProcessor::errorLoadingUrl,
-            this,   &MainWindow::handleNetworkError);
-
-    connect(processor,  &WebPageTextThreadProcessor::foundMatches,
-            this,   &MainWindow::handleMatchResults);
+    connectProcessor(processor);
 
     if(!m_procesorsList.contains(processor))
         m_procesorsList.append(processor);
@@ -183,24 +191,41 @@ void MainWindow::processParsedSubURLs(const QStringList &subURLs)
             WebPageTextThreadProcessor  *processor = new WebPageTextThreadProcessor(subList,
                                                                                     txt2Search);
 
-            connect(processor,  &WebPageTextThreadProcessor::errorLoadingUrl,
-                    this,   &MainWindow::handleNetworkError);
-            connect(processor,  &WebPageTextThreadProcessor::foundMatches,
-                    this,   &MainWindow::handleMatchResults);
-
-            // ugly lambda goes below
-            connect(processor,  &WebPageTextThreadProcessor::finished,
-                    this,  [this]()
-            {
-                m_procesorsList.removeOne((WebPageTextThreadProcessor*)sender());
-                sender()->deleteLater();
-                checkFinish();
-            });
+            connectProcessor(processor, true);
 
             m_procesorsList.append(processor);
         }
     }
 }
+/**
+ * @brief Helper function
+ * @param processor
+ */
+void MainWindow::connectProcessor(WebPageTextThreadProcessor  *processor, const bool &needCheckFinish)
+{
+    connect(processor,  &WebPageTextThreadProcessor::errorLoadingUrl,
+            this,   &MainWindow::handleNetworkError);
+
+    connect(processor,  &WebPageTextThreadProcessor::foundMatches,
+            this,   &MainWindow::handleMatchResults);
+
+    connect(processor,  &WebPageTextThreadProcessor::notFoundMatches,
+            this,   &MainWindow::handleNoResults);
+
+    // for not base URL
+    if(needCheckFinish)
+    {
+        // ugly lambda goes below
+        connect(processor,  &WebPageTextThreadProcessor::finished,
+                this,  [this]()
+        {
+            m_procesorsList.removeOne((WebPageTextThreadProcessor*)sender());
+            sender()->deleteLater();
+            checkFinish();
+        });
+    }
+}
+
 /**
  * @brief Translate UI
  * @param event

@@ -34,6 +34,10 @@ void TextParser::parse()
         setTotalMatches(posList.count());
         emit onParsedPosList(posList);
     }
+    else
+    {
+        emit onNothingFound();
+    }
 }
 
 void TextParser::moveToBaseThread(QThread *baseThread)

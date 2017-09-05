@@ -27,6 +27,10 @@ void WebPageTextThreadProcessor::threadSatrtInit()
     connect(m_parser.data(), &TextParser::onParsedPosList,
             this, &WebPageTextThreadProcessor::processParsedPosList);
 
+
+    connect(m_parser.data(), &TextParser::onNothingFound,
+            this, &WebPageTextThreadProcessor::nothingFound);
+
 //    qDebug() << Q_FUNC_INFO << m_searchPattern << m_urlsList;
 
     m_parser->setRxPattern(m_searchPattern);
@@ -35,7 +39,15 @@ void WebPageTextThreadProcessor::threadSatrtInit()
         m_url = m_urlsList[0];
         m_loader->loadUrl(m_url);
         m_urlsList.removeFirst();
-//    }
+        //    }
+}
+/**
+ * @brief nothingFound
+ */
+void WebPageTextThreadProcessor::nothingFound()
+{
+    emit notFoundMatches(m_loader->curURL());
+    processedURL(m_loader->curURL());
 }
 
 WebPageTextThreadProcessor::~WebPageTextThreadProcessor()
@@ -59,7 +71,19 @@ void WebPageTextThreadProcessor::processParsedPosList(const QList<int> &posList)
 //    qDebug() << Q_FUNC_INFO << m_urlsList.count() << m_loader->curURL() << posList.count();
 
     emit foundMatches(m_loader->curURL(), posList.count());
+    processedURL(m_loader->curURL());
+}
 
+TextParser *WebPageTextThreadProcessor::parser() const
+{
+    return m_parser.data();
+}
+/**
+ * @brief Removes processed URL from list and check finish
+ * @param url
+ */
+void WebPageTextThreadProcessor::processedURL(const QString &url)
+{
     if(m_urlsList.count())
     {
         m_url = m_urlsList[0];
@@ -70,11 +94,6 @@ void WebPageTextThreadProcessor::processParsedPosList(const QList<int> &posList)
     {
         emit finished();
     }
-}
-
-TextParser *WebPageTextThreadProcessor::parser() const
-{
-    return m_parser.data();
 }
 
 PageLoader *WebPageTextThreadProcessor::loader() const

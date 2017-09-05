@@ -34,6 +34,7 @@ private slots:
 
     void handleNetworkError(const QString &url, const QString &error);
     void handleMatchResults(const QString &url, const int &matchesCount);
+    void handleNoResults(const QString &url);
 
     void checkFinish();
 
@@ -41,6 +42,7 @@ protected:
     void changeEvent(QEvent *event);
     void cleanAllProcesses();
 
+    void connectProcessor(WebPageTextThreadProcessor *processor, const bool &needCheckFinish = false);
 private:
     Ui::MainWindow                      *ui;
     PageLoader                          *m_webPageLoader;   //base URL loader

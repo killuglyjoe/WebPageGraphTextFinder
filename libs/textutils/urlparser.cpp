@@ -40,6 +40,10 @@ void UrlParser::parse()
         setTotalMatches(listURLs.count());
         emit onParsedStringList(listURLs);
     }
+    else
+    {
+//        emit onNothingFound();
+    }
 }
 
 void UrlParser::moveToBaseThread(QThread *baseThread)

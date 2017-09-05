@@ -33,8 +33,7 @@ public slots:
 signals:
     void onParsedStringList(const QStringList &matchList);
     void onParsedPosList(const QList<int> &posList);
-
-public slots:
+    void onNothingFound();
 
 protected:
     virtual void moveToBaseThread(QThread*)=0;
