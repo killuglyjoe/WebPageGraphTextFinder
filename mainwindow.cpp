@@ -1,19 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-static const QString cStrBegin(MainWindow::trUtf8("<span style=\" font-weight:600;\">Начало поиска для...</span>"));
+static const QString cStrBegin(QObject::trUtf8("<span style=\" font-weight:600;\">Начало поиска для...</span>"));
 
-static const QString cStrStop(MainWindow::trUtf8("<span style=\" font-weight:600;\">Отмена</span>"));
+static const QString cStrStop(QObject::trUtf8("<span style=\" font-weight:600;\">Отмена</span>"));
 
-static const QString cStrFinished(MainWindow::trUtf8("<span style=\" font-weight:600;\">Конец</span>"));
+static const QString cStrFinished(QObject::trUtf8("<span style=\" font-weight:600;\">Конец</span>"));
 
-static const QString cStrNetError(MainWindow::trUtf8("<span style=\" font-style:italic; color:#e83720;\">"
+static const QString cStrNetError(QObject::trUtf8("<span style=\" font-style:italic; color:#e83720;\">"
                                                  "Сетевая ошибка адрес: %1 значение: %2 </span>"));
 
-static const QString cStrMatchResult(MainWindow::trUtf8("<span style=\" font-style:italic; text-decoration: "
+static const QString cStrMatchResult(QObject::trUtf8("<span style=\" font-style:italic; text-decoration: "
                                                     "underline; color:#0000ff;\">Найдено %1 совпадений по адресу %2 </span>"));
 
-static const QString cStrNoResult(MainWindow::trUtf8("<span style=\"color:#442222;"
+static const QString cStrNoResult(QObject::trUtf8("<span style=\"color:#442222;"
                                                     "\">Ненайдено совпадений по адресу %2 </span>"));
 
 MainWindow::MainWindow(QWidget *parent) :

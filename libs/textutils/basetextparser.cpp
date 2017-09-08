@@ -5,6 +5,8 @@ BaseTextParser::BaseTextParser(QObject *parent) :
     m_totalMatches(0),
     m_rxPattern("")
 {
+    qRegisterMetaType<QList<int>>("QList<int>");
+
     if(!parent)//without parent, must have own thread (pretty ugly)
     {
         m_thread = QSharedPointer<QThread>(new QThread);

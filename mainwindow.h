@@ -48,6 +48,19 @@ private:
     PageLoader                          *m_webPageLoader;   //base URL loader
     QSharedPointer<UrlParser>           m_urlParser;        //base WebPage URLs finder
     QList<WebPageTextThreadProcessor*>  m_procesorsList;
+//    QString cStrBegin;
+
+//    QString cStrStop;
+
+//    QString cStrFinished;
+
+//    QString cStrNetError;
+
+
+//    QString cStrMatchResult;
+
+
+//    QString cStrNoResult;
 };
 
 #endif // MAINWINDOW_H
